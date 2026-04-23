@@ -29,7 +29,7 @@ while True:
                 
                 df_datos = limpieza.limpiar_datos(df_datos)
                 df_datos.to_csv("datos_limpios.csv", index=False)
-                print("\n¡Limpieza completada y archivo guardado como 'datos_limpios.csv'!")
+                print("\nLimpieza completada y archivo guardado como 'datos_limpios.csv'")
             else:
                 print("\nPor favor, primero carga los datos usando la opción 1.")
 
@@ -41,7 +41,7 @@ while True:
                 print("\nNo hay datos cargados en memoria.")
 
         case "4":
-            print("\nSaliendo del programa. ¡Mucho éxito con tu código!")
+            print("\nSaliendo del programa.")
             break
 
         case _:
