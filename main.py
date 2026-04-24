@@ -17,12 +17,31 @@ while True:
 
     match opcion:
         case "1":
+            print("\n¿Qué archivo deseas cargar?")
+            print("1. datos.")
+            print("2. cursos.")
+
+            tipo = input("Seleccione una opción: ")
+            if tipo == "1":
+                ruta = "./data/raw/datos.csv"
+                df_datos = carga.cargar_datos(ruta)
+            elif tipo == "2":
+                ruta = "./data/raw/cursos.csv"
+                df_curso = carga.cargar_cursos(ruta)
+            else:
+                print("\nOpción inválida.")
+                continue
+
             
-            df_datos = carga.cargar_datos(RUTA_ARCHIVO)
+            isLoader = True
+            print ("Carga completa")
+
             if df_datos is not None:
-                isLoader = True
-                print("\nPrimeros registros:")
-                print(df_datos.head())
+                df_datos.info()
+                
+            if df_curso is not None:
+                df_curso.info()
+
 
         case "2":
             if isLoader:
