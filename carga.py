@@ -15,7 +15,7 @@ def cargar_cursos(ruta_archivo):
         
         df_curso = pd.read_csv(ruta_archivo)
         print("\n¡Archivo de cursos cargado con éxito!")
-        return df_curso # <--- Obligatorio
+        return df_curso 
     except Exception as e:
         print(f"\nError al cargar cursos: {e}")
         return df_curso

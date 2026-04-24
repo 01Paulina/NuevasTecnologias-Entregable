@@ -36,3 +36,50 @@ def limpiar_datos(df):
     df_limpio = df_limpio.reset_index(drop=True)
 
     return df_limpio
+
+def limpiar_cursos(df):
+    
+    
+    print("Columnas originales:")
+    print(df.columns)
+    
+    #1. Normalizar nombres de columnas
+    df.columns = df.columns.str.strip()
+
+    #2. Limpiar valores nulos (strings vacíos y 'null')
+    df = df.replace(["", " ", "null", "None"], pd.NA)
+
+    #3. Eliminar espacios en columnas de texto
+    df = df.replace(["", " ", "null", "None"], pd.NA)
+    
+    columnas_texto = ["nombreCurso", "descripcionCurso", "categoria", "dificultad"]
+    for col in columnas_texto:
+        df[col] = df[col].astype(str).str.strip()
+
+    #4. Corregir dificultad
+    df["dificultad"] = df["dificultad"].replace({
+        "medio": "intermedio",
+        "basico": "básico",
+        "avanzado": "avanzado"
+    })
+
+    #5. Convertir numeroNiveles a numérico
+    df["numeroNiveles"] = pd.to_numeric(df["numeroNiveles"], errors="coerce")
+    df = df[(df["numeroNiveles"] >= 1) & (df["numeroNiveles"] <= 10)]
+
+    #6. Eliminar filas con nulos importantes
+    df = df.dropna(subset=["nombreCurso", "descripcionCurso", "numeroNiveles"])
+
+    #7. Corregir nombres de cursos
+    df["nombreCurso"] = df["nombreCurso"].replace({
+        "fundamentos java": "fundamentos de java",
+        "spring boot avanzado": "spring boot avanzado",
+        "arquitectura microservicios spring cloud": "arquitectura de microservicios con spring cloud"
+    })
+
+    #8. Guardar archivo limpio
+    df.to_csv("cursos_limpio.csv", index=False)
+    print("Limpieza completada. Archivo guardado como cursos_limpio.csv")
+    print(df.head())
+
+    return df
