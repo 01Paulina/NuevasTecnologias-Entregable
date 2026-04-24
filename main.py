@@ -2,8 +2,8 @@ import pandas as pd
 import limpieza
 import carga
 
-RUTA_ARCHIVO = "./data/raw/datos.csv"
 df_datos = None
+df_curso = None
 isLoader = False
 
 while True:
@@ -25,14 +25,16 @@ while True:
             if tipo == "1":
                 ruta = "./data/raw/datos.csv"
                 df_datos = carga.cargar_datos(ruta)
+                df_datos.info()
             elif tipo == "2":
                 ruta = "./data/raw/cursos.csv"
                 df_curso = carga.cargar_cursos(ruta)
+                df_curso.info()
             else:
                 print("\nOpción inválida.")
                 continue
 
-            
+
             isLoader = True
             print ("Carga completa")
 
@@ -44,13 +46,22 @@ while True:
 
 
         case "2":
-            if isLoader:
-                
-                df_datos = limpieza.limpiar_datos(df_datos)
-                df_datos.to_csv("datos_limpios.csv", index=False)
-                print("\nLimpieza completada y archivo guardado como 'datos_limpios.csv'")
-            else:
-                print("\nPor favor, primero carga los datos usando la opción 1.")
+            print("\n¿Qué archivo deseas limpiar?")
+            print("1. datos.")
+            print("2. cursos.")
+
+            tipo = input("Seleccione una opción: ")
+            if tipo == "1":
+                if isLoader:
+                    df_limpio = limpieza.limpiar_datos(df_datos)
+                    df_limpio.to_csv("datos_limpios.csv", index=False)
+                    print ("\nLimpieza completada.")
+            
+            elif tipo == "2":
+                if isLoader:
+                    df_curso_limpio = limpieza.limpiar_cursos(df_curso)
+                    df_curso_limpio.to_csv("cursos_limpio.csv", index=False)
+                    print("\nLimpieza completada.")
 
         case "3":
             if isLoader:
