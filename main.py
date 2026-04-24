@@ -65,10 +65,15 @@ while True:
 
         case "3":
             if isLoader:
-                print("\nMostrando los primeros 5 registros de tus datos actuales:")
+                print("\nDatos actuales:")
+
+                df_datos= carga.cargar_datos("./data/raw/datos.csv")
+                df_curso = carga.cargar_cursos("./data/raw/cursos.csv") 
                 print(df_datos.head())
+                print(df_curso.head())
+                
             else:
-                print("\nNo hay datos cargados en memoria.")
+                print("\nNo hay datos cargados.")
 
         case "4":
             print("\nSaliendo del programa.")
